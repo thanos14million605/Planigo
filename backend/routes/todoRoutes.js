@@ -18,7 +18,7 @@ router
 
 router.patch("/:todoId/pin", todoController.pinTodo);
 router.patch("/:todoId/important", todoController.markTodoAsImportant);
-router.patch("/:todoId", todoController.markTodoAsComplete);
+router.patch("/:todoId/complete", todoController.markTodoAsComplete);
 router.post("/search/:q", todoController.searchTodo);
 
 export default router;

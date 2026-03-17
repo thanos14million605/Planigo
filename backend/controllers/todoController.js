@@ -156,7 +156,7 @@ const updateTodo = asyncHandler(async (req, res, next) => {
   let updatedTodo;
   if (title && description) {
     updatedTodo = await client.query(
-      "UPDATE todos SET title = $1 AND description = $2 WHERE id = $3 AND user_id = $4 RETURNING *",
+      "UPDATE todos SET title = $1, description = $2 WHERE id = $3 AND user_id = $4 RETURNING *",
       [title, description, todoId, req.user.id]
     );
   } else if (title && !description) {
@@ -384,7 +384,7 @@ const searchTodo = asyncHandler(async (req, res, next) => {
   const { q } = req.params;
   const lowercaseQ = q.toLowerCase();
   const matchedResults = await client.query(
-    "SELECT * FROM todos WHERE LOWER(title) LIKE %$1% OR LOWER(description) LIKE %$2% RETURNING *",
+    "SELECT * FROM todos WHERE LOWER(title) LIKE '%' || $1 || '%' OR LOWER(description) LIKE '%' || $2 || '%' RETURNING *",
     [lowercaseQ, lowercaseQ]
   );
 
