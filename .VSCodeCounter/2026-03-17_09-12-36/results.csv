@@ -1,0 +1,24 @@
+"filename", "language", "JavaScript", "JSON", "Environment Variables", "comment", "blank", "total"
+"c:\Users\Administrator\Desktop\Planigo\backend\app.js", "JavaScript", 14, 0, 0, 0, 4, 18
+"c:\Users\Administrator\Desktop\Planigo\backend\config.env", "Environment Variables", 0, 0, 6, 0, 0, 6
+"c:\Users\Administrator\Desktop\Planigo\backend\config\db.js", "JavaScript", 15, 0, 0, 0, 7, 22
+"c:\Users\Administrator\Desktop\Planigo\backend\controllers\authController.js", "JavaScript", 111, 0, 0, 0, 31, 142
+"c:\Users\Administrator\Desktop\Planigo\backend\controllers\todoController.js", "JavaScript", 350, 0, 0, 0, 66, 416
+"c:\Users\Administrator\Desktop\Planigo\backend\controllers\userController.js", "JavaScript", 48, 0, 0, 0, 16, 64
+"c:\Users\Administrator\Desktop\Planigo\backend\middlewares\globalErrorHandler.js", "JavaScript", 111, 0, 0, 1, 25, 137
+"c:\Users\Administrator\Desktop\Planigo\backend\middlewares\protectRoute.js", "JavaScript", 34, 0, 0, 0, 11, 45
+"c:\Users\Administrator\Desktop\Planigo\backend\middlewares\restrictTo.js", "JavaScript", 11, 0, 0, 0, 4, 15
+"c:\Users\Administrator\Desktop\Planigo\backend\migrations\20260316095352_create_table_users.js", "JavaScript", 27, 0, 0, 0, 3, 30
+"c:\Users\Administrator\Desktop\Planigo\backend\migrations\20260316101529_create_table_todos.js", "JavaScript", 33, 0, 0, 0, 9, 42
+"c:\Users\Administrator\Desktop\Planigo\backend\package-lock.json", "JSON", 0, 1547, 0, 0, 1, 1548
+"c:\Users\Administrator\Desktop\Planigo\backend\package.json", "JSON", 0, 23, 0, 0, 1, 24
+"c:\Users\Administrator\Desktop\Planigo\backend\routes\authRoutes.js", "JavaScript", 7, 0, 0, 0, 4, 11
+"c:\Users\Administrator\Desktop\Planigo\backend\routes\todoRoutes.js", "JavaScript", 18, 0, 0, 0, 5, 23
+"c:\Users\Administrator\Desktop\Planigo\backend\routes\userRoutes.js", "JavaScript", 8, 0, 0, 0, 4, 12
+"c:\Users\Administrator\Desktop\Planigo\backend\server.js", "JavaScript", 16, 0, 0, 0, 6, 22
+"c:\Users\Administrator\Desktop\Planigo\backend\utils\AppError.js", "JavaScript", 10, 0, 0, 0, 3, 13
+"c:\Users\Administrator\Desktop\Planigo\backend\utils\apiFeatures.js", "JavaScript", 75, 0, 0, 1, 16, 92
+"c:\Users\Administrator\Desktop\Planigo\backend\utils\asyncHandler.js", "JavaScript", 2, 0, 0, 0, 2, 4
+"c:\Users\Administrator\Desktop\Planigo\backend\utils\bcryptHelper.js", "JavaScript", 8, 0, 0, 0, 4, 12
+"c:\Users\Administrator\Desktop\Planigo\backend\utils\jwtHelper.js", "JavaScript", 15, 0, 0, 0, 5, 20
+"Total", "-", 913, 1570, 6, 2, 227, 2718

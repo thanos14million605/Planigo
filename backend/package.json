@@ -1,0 +1,23 @@
+{
+  "name": "planigo",
+  "version": "1.0.0",
+  "description": "Backend of Planigo todo list application",
+  "license": "ISC",
+  "author": "Ebrima Gajaga",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "morgan": "^1.10.1",
+    "nodemon": "^3.1.14",
+    "pg": "^8.20.0",
+    "validator": "^13.15.26"
+  }
+}

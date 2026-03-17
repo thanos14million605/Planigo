@@ -1,0 +1,56 @@
+Date : 2026-03-17 09:12:36
+Directory : c:\Users\Administrator\Desktop\Planigo
+Total : 22 files,  2489 codes, 2 comments, 227 blanks, all 2718 lines
+
+Languages
++-----------------------+------------+------------+------------+------------+------------+
+| language              | files      | code       | comment    | blank      | total      |
++-----------------------+------------+------------+------------+------------+------------+
+| JSON                  |          2 |      1,570 |          0 |          2 |      1,572 |
+| JavaScript            |         19 |        913 |          2 |        225 |      1,140 |
+| Environment Variables |          1 |          6 |          0 |          0 |          6 |
++-----------------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                           | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                              |         22 |      2,489 |          2 |        227 |      2,718 |
+| backend                                                                                        |         22 |      2,489 |          2 |        227 |      2,718 |
+| backend (Files)                                                                                |          5 |      1,606 |          0 |         12 |      1,618 |
+| backend\config                                                                                 |          1 |         15 |          0 |          7 |         22 |
+| backend\controllers                                                                            |          3 |        509 |          0 |        113 |        622 |
+| backend\middlewares                                                                            |          3 |        156 |          1 |         40 |        197 |
+| backend\migrations                                                                             |          2 |         60 |          0 |         12 |         72 |
+| backend\routes                                                                                 |          3 |         33 |          0 |         13 |         46 |
+| backend\utils                                                                                  |          5 |        110 |          1 |         30 |        141 |
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------+-----------------------+------------+------------+------------+------------+
+| filename                                                                                       | language              | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------+-----------------------+------------+------------+------------+------------+
+| c:\Users\Administrator\Desktop\Planigo\backend\app.js                                          | JavaScript            |         14 |          0 |          4 |         18 |
+| c:\Users\Administrator\Desktop\Planigo\backend\config.env                                      | Environment Variables |          6 |          0 |          0 |          6 |
+| c:\Users\Administrator\Desktop\Planigo\backend\config\db.js                                    | JavaScript            |         15 |          0 |          7 |         22 |
+| c:\Users\Administrator\Desktop\Planigo\backend\controllers\authController.js                   | JavaScript            |        111 |          0 |         31 |        142 |
+| c:\Users\Administrator\Desktop\Planigo\backend\controllers\todoController.js                   | JavaScript            |        350 |          0 |         66 |        416 |
+| c:\Users\Administrator\Desktop\Planigo\backend\controllers\userController.js                   | JavaScript            |         48 |          0 |         16 |         64 |
+| c:\Users\Administrator\Desktop\Planigo\backend\middlewares\globalErrorHandler.js               | JavaScript            |        111 |          1 |         25 |        137 |
+| c:\Users\Administrator\Desktop\Planigo\backend\middlewares\protectRoute.js                     | JavaScript            |         34 |          0 |         11 |         45 |
+| c:\Users\Administrator\Desktop\Planigo\backend\middlewares\restrictTo.js                       | JavaScript            |         11 |          0 |          4 |         15 |
+| c:\Users\Administrator\Desktop\Planigo\backend\migrations\20260316095352_create_table_users.js | JavaScript            |         27 |          0 |          3 |         30 |
+| c:\Users\Administrator\Desktop\Planigo\backend\migrations\20260316101529_create_table_todos.js | JavaScript            |         33 |          0 |          9 |         42 |
+| c:\Users\Administrator\Desktop\Planigo\backend\package-lock.json                               | JSON                  |      1,547 |          0 |          1 |      1,548 |
+| c:\Users\Administrator\Desktop\Planigo\backend\package.json                                    | JSON                  |         23 |          0 |          1 |         24 |
+| c:\Users\Administrator\Desktop\Planigo\backend\routes\authRoutes.js                            | JavaScript            |          7 |          0 |          4 |         11 |
+| c:\Users\Administrator\Desktop\Planigo\backend\routes\todoRoutes.js                            | JavaScript            |         18 |          0 |          5 |         23 |
+| c:\Users\Administrator\Desktop\Planigo\backend\routes\userRoutes.js                            | JavaScript            |          8 |          0 |          4 |         12 |
+| c:\Users\Administrator\Desktop\Planigo\backend\server.js                                       | JavaScript            |         16 |          0 |          6 |         22 |
+| c:\Users\Administrator\Desktop\Planigo\backend\utils\AppError.js                               | JavaScript            |         10 |          0 |          3 |         13 |
+| c:\Users\Administrator\Desktop\Planigo\backend\utils\apiFeatures.js                            | JavaScript            |         75 |          1 |         16 |         92 |
+| c:\Users\Administrator\Desktop\Planigo\backend\utils\asyncHandler.js                           | JavaScript            |          2 |          0 |          2 |          4 |
+| c:\Users\Administrator\Desktop\Planigo\backend\utils\bcryptHelper.js                           | JavaScript            |          8 |          0 |          4 |         12 |
+| c:\Users\Administrator\Desktop\Planigo\backend\utils\jwtHelper.js                              | JavaScript            |         15 |          0 |          5 |         20 |
+| Total                                                                                          |                       |      2,489 |          2 |        227 |      2,718 |
++------------------------------------------------------------------------------------------------+-----------------------+------------+------------+------------+------------+
