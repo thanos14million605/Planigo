@@ -107,7 +107,8 @@ const login = asyncHandler(async (req, res, next) => {
   res.cookie("jwt", jwt, {
     httpOnly: true,
     maxAge: process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
-    secure: process.env.NODE_ENV === "production",
+    secure: process.env.NODE_ENV === "production", // Use false for local dev
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   });
 
   await client.query("COMMIT");

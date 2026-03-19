@@ -29,14 +29,14 @@ const globalErrorHandler = async (err, req, res, _) => {
 
   if (err.code) {
     switch (err.code) {
-      case "23505": // unique_violation
+      case "23505":
         customError = new AppError(
           "Duplicate value violates unique constraint.",
           409
         );
         break;
 
-      case "23503": // foreign_key_violation
+      case "23503":
         customError = new AppError(
           "Invalid reference. Related record not found.",
           400
@@ -44,60 +44,59 @@ const globalErrorHandler = async (err, req, res, _) => {
         break;
 
       case "22P02":
-        // invalid input syntax (like UUID issue)
         customError = new AppError(
           "Invalid UUID format. Please provide a valid UUID.",
           400
         );
         break;
 
-      case "23502": // not_null_violation
+      case "23502":
         customError = new AppError(
           `Missing required field: ${err.column}`,
           400
         );
         break;
 
-      case "22P02": // invalid_text_representation
+      case "22P02":
         customError = new AppError("Invalid input syntax.", 400);
         break;
 
-      case "42703": // undefined_column
+      case "42703":
         customError = new AppError("Invalid column in query.", 400);
         break;
 
-      case "42P01": // undefined_table
+      case "42P01":
         customError = new AppError("Invalid table in query.", 500);
         break;
 
-      case "42601": // syntax_error
+      case "42601":
         customError = new AppError("SQL syntax error.", 500);
         break;
 
-      case "42883": // undefined_function
+      case "42883":
         customError = new AppError("Invalid SQL function/operator.", 500);
         break;
 
-      case "40001": // serialization_failure
+      case "40001":
         customError = new AppError(
           "Transaction failed due to concurrency. Please retry.",
           503
         );
         break;
 
-      case "40P01": // deadlock_detected
+      case "40P01":
         customError = new AppError("Deadlock detected. Please retry.", 503);
         break;
 
-      case "22012": // division_by_zero
+      case "22012":
         customError = new AppError("Division by zero error.", 400);
         break;
 
-      case "22001": // string_data_right_truncation
+      case "22001":
         customError = new AppError("Input string too long for column.", 400);
         break;
 
-      case "22003": // numeric_value_out_of_range
+      case "22003":
         customError = new AppError("Number out of range for column type.", 400);
         break;
 

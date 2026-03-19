@@ -1,4 +1,7 @@
 import asyncHandler from "../utils/asyncHandler.js";
+import AppError from "../utils/AppError.js";
+import pool from "../config/db.js";
+import jwtHelper from "../utils/jwtHelper.js";
 
 const protectRoute = asyncHandler(async (req, _, next) => {
   let token;

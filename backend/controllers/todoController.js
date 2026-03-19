@@ -17,7 +17,7 @@ const createTodo = asyncHandler(async (req, res, next) => {
   await client.query("BEGIN");
 
   const user = await client.query(
-    "SELECT id, name, email FROM users WHERE id = $1 RETURNING *",
+    "SELECT id, name, email FROM users WHERE id = $1",
     [req.user.id]
   );
 
@@ -27,7 +27,7 @@ const createTodo = asyncHandler(async (req, res, next) => {
 
   const newTodo = await client.query(
     "INSERT INTO todos (user_id, title, description) VALUES ($1, $2, $3) RETURNING *",
-    [1, title, description]
+    [req.user.id, title, description]
   );
 
   await client.query("COMMIT");
@@ -45,82 +45,81 @@ const createTodo = asyncHandler(async (req, res, next) => {
 const getTodo = asyncHandler(async (req, res, next) => {
   const client = await pool.connect();
   req.pgClient = client;
-  const user = client.query(
-    "SELECT id, name, email FROM users WHERE id = $1 RETURNING *",
+
+  // 👇 ADD await here!
+  const user = await client.query(
+    "SELECT id, name, email FROM users WHERE id = $1",
     [req.user.id]
   );
+
   if (user.rows.length === 0) {
+    client.release(); // <-- Clean up on error!
     return next(new AppError("User not found", 401));
   }
+
   const { todoId } = req.params;
 
+  console.log("Todo Id", todoId);
+  console.log("User id", req.user.id);
+
   const todo = await client.query(
-    "SELECT * FROM todos WHERE id = $1 AND user_id = $2 RETURNING *",
+    "SELECT * FROM todos WHERE id = $1 AND user_id = $2",
     [todoId, req.user.id]
   );
+
+  // console.log("Todos", todo);
 
   if (todo.rows.length === 0) {
     return next(new AppError("Todo not found", 404));
   }
 
-  client.release();
+  client?.release?.();
   res.status(200).json({
     status: "success",
-    data: {
-      ...todo.rows[0],
-    },
+    data: todo.rows[0],
   });
 });
-
 const getAllTodos = asyncHandler(async (req, res, next) => {
   const client = await pool.connect();
   req.pgClient = client;
-
   await client.query("BEGIN");
 
-  const selectedFields = applyFieldLimiting(req.query);
-  console.log(selectedFields);
-
-  const { whereByClause, values } = applyFiltering(req.query);
-  console.log(whereByClause, values);
-
-  const limitClause = applyPagination(req.query);
-  console.log(limitClause);
-
-  const orderByClause = applySorting(req.query);
-  console.log(orderByClause);
-
-  let selectQuery = "";
-  if (selectedFields) {
-    selectQuery = `SELECT ${selectedFields}`;
-  }
-
-  selectQuery = `SELECT *`;
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 5;
+  const offset = (page - 1) * limit;
 
   const sql = `
-    ${selectQuery}
-    FROM todos 
+    SELECT 
+      todos.id AS todo_id,
+      todos.title,
+      todos.description,
+      todos.is_pinned,
+      todos.is_completed,
+      todos.is_important,
+      todos.user_id,
+      users.name AS user_name,
+      users.email AS user_email
+    FROM todos
     JOIN users ON todos.user_id = users.id
-    ${whereByClause}
-    ${orderByClause} 
-    ${limitClause}
+    WHERE todos.user_id = $1
+    ORDER BY todos.created_at DESC
+    LIMIT $2 OFFSET $3
   `;
 
+  const values = [req.user.id, limit, offset];
   const todos = await client.query(sql, values);
+
+  await client.query("COMMIT");
+  client.release();
 
   if (todos.rows.length === 0) {
     return next(new AppError("No matching records.", 404));
   }
 
-  await client.query("COMMIT");
-  client.release();
-
   res.status(200).json({
     status: "success",
     results: todos.rows.length,
-    data: {
-      ...todos.rows,
-    },
+    data: todos.rows,
   });
 });
 
@@ -128,13 +127,6 @@ const updateTodo = asyncHandler(async (req, res, next) => {
   const client = await pool.connect();
   req.pgClient = client;
   await client.query("BEGIN");
-  const user = client.query(
-    "SELECT id, name, email FROM users WHERE id = $1 RETURNING *",
-    [req.user.id]
-  );
-  if (user.rows.length === 0) {
-    return next(new AppError("User not found", 401));
-  }
 
   const { title, description } = req.body;
   if (!title || !description) {
@@ -193,17 +185,10 @@ const deleteTodo = asyncHandler(async (req, res, next) => {
   const client = await pool.connect();
   req.pgClient = client;
   await client.query("BEGIN");
-  const user = client.query(
-    "SELECT id, name, email FROM users WHERE id = $1 RETURNING *",
-    [req.user.id]
-  );
-  if (user.rows.length === 0) {
-    return next(new AppError("User not found", 401));
-  }
 
   const { todoId } = req.params;
   const todo = await client.query(
-    "SELECT * FROM todos WHERE id = $1 AND user_id = $2 RETURNING *",
+    "SELECT * FROM todos WHERE id = $1 AND user_id = $2",
     [todoId, req.user.id]
   );
 
@@ -229,17 +214,10 @@ const pinTodo = asyncHandler(async (req, res, next) => {
   const client = await pool.connect();
   req.pgClient = client;
   await client.query("BEGIN");
-  const user = client.query(
-    "SELECT id, name, email FROM users WHERE id = $1 RETURNING *",
-    [req.user.id]
-  );
-  if (user.rows.length === 0) {
-    return next(new AppError("User not found", 401));
-  }
 
   const { todoId } = req.params;
   const todo = await client.query(
-    "SELECT is_pinned FROM todos WHERE id = $1 AND user_id = $2 RETURNING *",
+    "SELECT is_pinned FROM todos WHERE id = $1 AND user_id = $2",
     [todoId, req.user.id]
   );
 
@@ -277,17 +255,16 @@ const markTodoAsImportant = asyncHandler(async (req, res, next) => {
   const client = await pool.connect();
   req.pgClient = client;
   await client.query("BEGIN");
-  const user = client.query(
-    "SELECT id, name, email FROM users WHERE id = $1 RETURNING *",
-    [req.user.id]
-  );
+  const user = client.query("SELECT id, name, email FROM users WHERE id = $1", [
+    req.user.id,
+  ]);
   if (user.rows.length === 0) {
     return next(new AppError("User not found", 401));
   }
 
   const { todoId } = req.params;
   const todo = await client.query(
-    "SELECT is_important FROM todos WHERE id = $1 AND user_id = $2 RETURNING *",
+    "SELECT is_important FROM todos WHERE id = $1 AND user_id = $2",
     [todoId, req.user.id]
   );
 
@@ -373,18 +350,11 @@ const searchTodo = asyncHandler(async (req, res, next) => {
   const client = await pool.connect();
   req.pgClient = client;
   await client.query("BEGIN");
-  const user = client.query(
-    "SELECT id, name, email FROM users WHERE id = $1 RETURNING *",
-    [req.user.id]
-  );
-  if (user.rows.length === 0) {
-    return next(new AppError("User not found", 401));
-  }
 
   const { q } = req.params;
   const lowercaseQ = q.toLowerCase();
   const matchedResults = await client.query(
-    "SELECT * FROM todos WHERE LOWER(title) LIKE '%' || $1 || '%' OR LOWER(description) LIKE '%' || $2 || '%' RETURNING *",
+    "SELECT * FROM todos WHERE LOWER(title) LIKE '%' || $1 || '%' OR LOWER(description) LIKE '%' || $2 || '%'",
     [lowercaseQ, lowercaseQ]
   );
 
@@ -394,15 +364,13 @@ const searchTodo = asyncHandler(async (req, res, next) => {
 
   await client.query("COMMIT");
   client.release();
+
   res.status(200).json({
     status: "success",
     results: matchedResults.rows.length,
-    data: {
-      ...matchedResults.rows,
-    },
+    data: matchedResults.rows,
   });
 });
-
 export default {
   createTodo,
   getTodo,

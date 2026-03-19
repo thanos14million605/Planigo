@@ -41,9 +41,9 @@ const applyFiltering = (queryString) => {
   const values = [];
   let i = 1;
 
-  for (const key of queryObj) {
+  for (const key in queryObj) {
+    if (!Object.prototype.hasOwnProperty.call(queryObj, key)) continue;
     if (key.includes("[")) {
-      // Example: price[gte]=100
       const [field, operator] = key.replace("]", "").split("[");
       let sqlOperator;
 

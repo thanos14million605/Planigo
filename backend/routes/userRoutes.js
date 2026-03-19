@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.use(protectRoute);
 router.route("/").post(restrictTo("admin"), userController.createUser);
+router.route("/").get(restrictTo("admin"), userController.getAllUsers);
 router.route("/:id").delete(restrictTo("admin"), userController.deleteUser);
 router.route("/me").get(userController.getMe);
 

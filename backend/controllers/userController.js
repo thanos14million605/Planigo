@@ -1,6 +1,7 @@
 import asyncHandler from "../utils/asyncHandler.js";
 import pool from "../config/db.js";
 import bcryptHelper from "../utils/bcryptHelper.js";
+import validator from "validator";
 
 const createUser = asyncHandler(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -12,14 +13,6 @@ const createUser = asyncHandler(async (req, res, next) => {
   const client = await pool.connect();
   req.pgClient = client;
   await client.query("BEGIN");
-  const user = await client.query(
-    "SELECT id, name, email, role FROM users WHERE id = $1 RETURNING *",
-    [req.user.id]
-  );
-
-  if (user.rows.length === 0 || user.role !== "admin") {
-    return next(new AppError("User not found", 401));
-  }
 
   const isExistingUser = await client.query(
     "SELECT email from users WHERE email = $1",
@@ -91,10 +84,9 @@ const getMe = asyncHandler(async (req, res, next) => {
   req.pgClient = client;
 
   await client.query("BEGIN");
-  const me = await client.query(
-    "SELECT * FROM users WHERE id = $1 RETURNING *",
-    [req.user.id]
-  );
+  const me = await client.query("SELECT * FROM users WHERE id = $1", [
+    req.user.id,
+  ]);
 
   res.status(200).json({
     status: "success",
@@ -104,4 +96,23 @@ const getMe = asyncHandler(async (req, res, next) => {
   });
 });
 
-export default { createUser, deleteUser, getMe };
+const getAllUsers = asyncHandler(async (req, res, next) => {
+  const client = await pool.connect();
+  req.pgClient = client;
+  await client.query("BEGIN");
+
+  const users = await client.query("SELECT * FROM users ORDER BY role");
+  if (users.rows.length === 0) {
+    return next(new AppError("No users found.", 404));
+  }
+
+  await client.query("COMMIT");
+  client.release();
+
+  res.status(200).json({
+    status: "success",
+    data: users.rows,
+  });
+});
+
+export default { createUser, deleteUser, getMe, getAllUsers };
