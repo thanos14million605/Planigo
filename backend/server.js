@@ -1,7 +1,7 @@
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
-import express from "express.js";
+import express from "express";
 
 import app from "./app.js";
 import pool from "./config/db.js";
