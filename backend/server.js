@@ -19,7 +19,7 @@ pool
   .catch((err) => console.log("Error in DB connection", err));
 
 if (process.env.NODE_ENV === "production") {
-  const frontendPath = path.resolve(__dirname, "../frontend/dist");
+  const frontendPath = path.resolve(__dirname, "../frontendts/dist");
 
   app.use(express.static(frontendPath));
 
