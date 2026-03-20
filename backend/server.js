@@ -9,9 +9,7 @@ import pool from "./config/db.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config({
-  path: path.resolve(__dirname, "./config.env"),
-});
+dotenv.config();
 
 pool
   .query("SELECT NOW()")

@@ -7,14 +7,12 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config({
-  path: path.resolve(__dirname, "./../config.env"),
-});
+dotenv.config();
 
 const isProduction = process.env.NODE_ENV === "production";
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL_PROD,
   ssl: isProduction ? { rejectUnauthorized: false } : false,
 });
 

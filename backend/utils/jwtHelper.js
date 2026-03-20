@@ -1,8 +1,6 @@
 import { promisify } from "util";
 import dotenv from "dotenv";
-dotenv.config({
-  path: "./../config.env",
-});
+dotenv.config();
 
 import jwt from "jsonwebtoken";
 
