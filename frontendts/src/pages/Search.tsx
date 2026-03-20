@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { api } from "../utils/api";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -11,6 +11,10 @@ const Search: React.FC = () => {
     e.preventDefault();
     api.searchTodos(query).then((data) => setResults(data || []));
   };
+
+  useEffect(() => {
+    if (query === "") setResults([]);
+  }, [query]);
 
   return (
     <motion.div
@@ -31,7 +35,13 @@ const Search: React.FC = () => {
         />
         <button className="btn-primary">Search</button>
       </form>
-      <ul className="p-4 rounded-xl glass hover:shadow-xl transition">
+
+      {results.length > 0 && (
+        <p className="my-8 text-2xl text-center text-blue-700 font-bold">
+          {results?.length} Search Result{results.length > 1 ? "s" : ""}...
+        </p>
+      )}
+      <ul className="mt-5 p-4 rounded-xl glass hover:shadow-xl transition">
         {results.map((todo) => (
           <li
             key={todo.id}

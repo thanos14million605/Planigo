@@ -354,8 +354,8 @@ const searchTodo = asyncHandler(async (req, res, next) => {
   const { q } = req.params;
   const lowercaseQ = q.toLowerCase();
   const matchedResults = await client.query(
-    "SELECT * FROM todos WHERE LOWER(title) LIKE '%' || $1 || '%' OR LOWER(description) LIKE '%' || $2 || '%'",
-    [lowercaseQ, lowercaseQ]
+    "SELECT * FROM todos WHERE user_id = $3 AND LOWER(title) LIKE '%' || $1 || '%' OR LOWER(description) LIKE '%' || $2 || '%'",
+    [lowercaseQ, lowercaseQ, req.user.id]
   );
 
   if (matchedResults.rows.length === 0) {
