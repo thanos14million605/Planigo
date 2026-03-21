@@ -2,6 +2,11 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+
+dotenv.config({
+  path: "./config.env",
+});
 
 import globalErrorHandler from "./middlewares/globalErrorHandler.js";
 
@@ -9,10 +14,15 @@ import todoRouter from "./routes/todoRoutes.js";
 import authRouter from "./routes/authRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 
+const isProduction = process.env.NODE_ENV === "production";
+console.log(isProduction);
+
 const app = express();
 app.use(
   cors({
-    origin: "https://planigo.onrender.com",
+    origin: isProduction
+      ? "https://planigo.onrender.com"
+      : "http://localhost:5173",
     credentials: true,
   })
 );
